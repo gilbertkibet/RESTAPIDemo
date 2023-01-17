@@ -21,13 +21,15 @@ namespace RESTAPIDemo
         {
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.File(
-                path: "C:\\Temp\\employeelog-.txt",
+                path: "C:\\Temp\\Employeelogs-.txt",
                 outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm,ss.fff zzz}[{Level:u3}] {Message:lj}{NewLine}{Exception}",
                 rollingInterval: RollingInterval.Day,
                 restrictedToMinimumLevel: LogEventLevel.Information
                 ).CreateLogger();
 
+
             var host = CreateHostBuilder(args).Build();
+                                                         
 
             using (var scope = host.Services.CreateScope())
             {
@@ -43,14 +45,15 @@ namespace RESTAPIDemo
                 {
 
                     logger.LogError(JsonConvert.SerializeObject(ex));
-                }
 
-            }
+                }
+            
             host.Run();
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+            Host.CreateDefaultBuilder(args).UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

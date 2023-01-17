@@ -1,6 +1,7 @@
-﻿using RESTAPIDemo.ApiContext;
+﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using RESTAPIDemo.ApiContext;
 using RESTAPIDemo.Entities;
-using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,9 @@ namespace RESTAPIDemo.Repositories
 
         private readonly AppDbContext _appDbContext;
 
-        private readonly ILogger _logger;
+        private readonly ILogger<EmployeeRepositoryDb> _logger;
 
-        public EmployeeRepositoryDb(AppDbContext apiDbContext,ILogger logger)
+        public EmployeeRepositoryDb(AppDbContext apiDbContext,ILogger<EmployeeRepositoryDb>logger)
         {
             _appDbContext = apiDbContext;
 
@@ -54,7 +55,9 @@ namespace RESTAPIDemo.Repositories
                 existingemployee.Department = employee.Department;
                 existingemployee.DateofJoin = employee.DateofJoin;
                 existingemployee.IsActive = employee.IsActive;
+
                 _appDbContext.tblemployees.Update(employee);
+
                 _appDbContext.SaveChanges();
             }
 
@@ -71,7 +74,13 @@ namespace RESTAPIDemo.Repositories
 
         public List<Employee> GetEmployees()
         {
+           
+            
+
                return _appDbContext.tblemployees.ToList();
+            
+
+           
 
         }
     }

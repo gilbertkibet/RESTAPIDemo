@@ -25,9 +25,17 @@ namespace RESTAPIDemo.Controllers
         #region crud operations action methods
         [HttpGet]
 
-        public async Task< IActionResult> GetEmployees()
+        public  IActionResult GetEmployees()
         {
-            return Ok( await _employeeRepository.GetEmployees());
+           
+           
+
+            return Ok(  _employeeRepository.GetEmployees());
+
+            
+          
+            
+
             
         }
 
@@ -75,7 +83,7 @@ namespace RESTAPIDemo.Controllers
             {
                 employee.Id = _employee.Id;
 
-                _employeeRepository.EditEmployee(employee);
+                _employeeRepository.EditEmployee(_employee);
 
                 return StatusCode(200);
             }
